@@ -1,5 +1,11 @@
 const SLIDES = [
   {
+    title: "오늘의 온도",
+    content: "오늘은 2024년 6월 4일입니다. 각자의 온도를 알려주세요. (0도에서 10도 사이의 숫자)",
+    contentType: "html",
+    image: "assets/image0.jpg"
+  },
+  {
     title: "웹사이트란 무엇일까?"
   },
   {
