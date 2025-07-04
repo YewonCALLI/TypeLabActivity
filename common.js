@@ -1,46 +1,89 @@
-// TypeLab 공통 데이터 및 함수
-
-// 슬라이드 데이터
 const SLIDES = [
   {
-    title: "컴퓨터의 발명",
+    title: "웹사이트란 무엇일까?"
+  },
+  {
+    title: "웹사이트란 무엇일까?",
     content:
-      '<a href="https://blog.naver.com/moons4ir/223439412594">아타나소프-베리 컴퓨터(Atanasoff–Berry Computer)</a>는 세계 최초의 전자식 컴퓨터이다.',
+      '웹사이트는 컴퓨터에 저장된 여러 파일이 들어 있는 폴더와 같다.',
     contentType: "html",
-    image: "static/firstcomputer.jpeg",
+    image: "assets/image1.png",
   },
   {
-    title: "타이포와 알고리즘",
-    content:
-      '<a href="https://youtu.be/AgjtKQCm95I?si=m2DePNvVELHLYv1s&t=622">Ben Laposky의 전자 추상화 실험</a>, 최초의 디지털 그래픽 실험.',
+    content: "웹사이트는 내 컴퓨터에 있을 수도 있지만, 보통은 '서버'라고 불리는 항상 켜져 있는 컴퓨터에 저장됩니다.",
+    image: "assets/image2.jpg",
+  },
+  {
+    title:
+      "서버가 인터넷에서 어디에 있는지는 'IP 주소'라는 네 개의 숫자로 표현됩니다.",
     contentType: "html",
-    image: "static/images (3).jpg",
+    image: "assets/image3.png",
   },
   {
-    content: "차피노체의 디지털화 (1993)",
-    image: "static/download (1).jpeg",
+    title: "이런 숫자들을 다 외우긴 힘들겠죠?",
+    content: 'DNS라는 서비스는 우리가 google.com처럼 쉽게 기억할 수 있는 주소를 입력하면, 그것을 해당 페이지가 있는 서버의 실제 주소(IP 주소)로 바꿔줍니다.',
+    image: "assets/image4.jpg",
   },
   {
-    content:
-      '2000년대 중반부터 타이포를 활용한 재밌는 실험들이 등장하기 시작했다. 실용적인 것부터 기괴한 것까지.<br> <a href="https://erikdemaine.org/fonts/">Mathematical and Puzzle Fonts/Typefaces (MIT EECS)</a>',
+    title: "웹사이트를 만드는 데 꼭 이걸 이해할 필요는 없지만, 알고 있으면 도움이 됩니다. 다시 파일 이야기로 돌아가 봅시다."
+  },
+  {
+    title: "웹사이트를 만드는 데 가장 기본이 되는 파일은 HTML 파일",
+    content:"이 파일은 HTML이라는 언어로 작성됩니다.",
     contentType: "html",
-    image: "static/image4.png",
+    image: "assets/image5.png",
   },
   {
-    content: "Yeohyun Ahn (TYPE I)",
-    image: "static/image5.png",
+    title: "그럼 HTML 파일은 무엇일까요?",
+    content:"HTML은 HyperText Markup Language의 약자로, 웹 페이지의 구조를 정의하는 언어입니다. HTML 파일은 웹 페이지의 내용을 구성하는 텍스트, 이미지, 링크 등을 포함합니다.",
+    contentType: "html",
+    image: "assets/image6.png",
   },
+  {
+    title:"HTML은 웹 브라우저에 화면에 무엇을 어떻게 보여줄지 지시하는 '마크업 언어', 즉 일종의 시각적 지시 언어입니다."
+  },
+  {
+    image: "assets/image7.png"
+  },
+  {
+    title: '웹 브라우저란?',
+    content: "웹 브라우저는 HTML 파일을 읽고, 그 내용을 화면에 표시해주는 프로그램입니다. 우리가 웹사이트를 볼 때 사용하는 Chrome, Firefox, Safari 등이 웹 브라우저입니다.",
+    contentType: "html",
+    image: "assets/image8.png",
+  },
+  {
+    title: "다음 시간에는 ^^한용파 선생님^^의 도움으로 HTML 파일을 직접 만들어 볼 거예요.",
+    content: "HTML 파일을 만드는 것은 웹사이트를 만드는 첫걸음입니다.",
+    contentType: "html",
+    image: "assets/image9.png"
+  },
+  {
+    title: "그럼 오늘 뭐하냐구요?",
+    content: "오늘은 우리가 알고 있는 웹사이트를 공유하고 서로의 웹사이트를 탐험해 볼 거예요.",
+    contentType: "html",
+    image: "assets/image10.jpg"
+  },
+  {
+    title: "재밌는 웹사이트를 찾을 수 있는 곳",
+    content: '<a href="https://gossipsweb.net/" target="_blank">GossipsWeb</a><br><a href="https://thehtml.review/04/" target="_blank">The HTML Review</a><br><a href="https://www.naiveweekly.com/" target="_blank">Naive Weekly</a><br><a href="https://theuselessweb.com/">The Useless Web</a><br> <a href="https://anthology.rhizome.org/natural-process">Rhizome Net Art Anthology(1984-2019)</a><br><a href="https://web.archive.org/">Wayback Machine</a><br><a href="https://cyberfeminismindex.com/">Cyberfeminisim Index</a>',
+    contentType: "html",
+  },
+  {
+    title: "웹은 자유의 공간??",
+    content: '<a href="https://www.watching-grass-grow.com/">Watching Grass Grow</a><br><a href="https://motherfuckingwebsite.com/">Motherf***ing Website</a><br><a href="https://palestineonline.net/?site=jerusalem-i-love-you">Palestine Online</a>',
+    contentType: "html",
+  },
+  { 
+    content: "<iframe src='https://padlet.com/typelabkr/0604-y7bao34tczxuzg2n' width='1200px' frameborder='0' allowfullscreen></iframe>",
+    contentType: "html",
+  }
 ];
 
-// 공통 함수들
-
-// 메시지 포매팅 함수
 function formatMessage(message) {
   if (!message) return "";
   return message.replace(/\n/g, "<br>");
 }
 
-// 쓰로틀링 함수
 function throttle(func, delay) {
   let inThrottle;
   return function () {
@@ -129,7 +172,7 @@ function createSlideElement(slide, index) {
       alt: slide.title || "Slide " + (index + 1),
     });
     imageElement.style.maxWidth = "100%";
-    imageElement.style.maxHeight = "300px";
+    imageElement.style.maxHeight = "500px";
     slideElement.appendChild(imageElement);
   }
 

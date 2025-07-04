@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학생 행성 링크 시스템</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        .universe {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .student-system {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .student-planet {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .student-planet:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        /* 각 학생별 색상 */
+        .student-system:nth-child(1) .student-planet { background: linear-gradient(45deg, #ff9a9e, #fecfef); }
+        .student-system:nth-child(2) .student-planet { background: linear-gradient(45deg, #a8edea, #fed6e3); }
+        .student-system:nth-child(3) .student-planet { background: linear-gradient(45deg, #ffecd2, #fcb69f); }
+        .student-system:nth-child(4) .student-planet { background: linear-gradient(45deg, #667eea, #764ba2); }
+        .student-system:nth-child(5) .student-planet { background: linear-gradient(45deg, #f093fb, #f5576c); }
+        .student-system:nth-child(6) .student-planet { background: linear-gradient(45deg, #4facfe, #00f2fe); }
+
+        .orbit {
+            position: absolute;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            animation: rotate 20s linear infinite;
+        }
+
+        .satellite {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .satellite:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: scale(1.2);
+        }
+
+        .satellite.has-link {
+            background: rgba(251, 0, 255, 0.3);
+            border-color: rgba(251, 0, 255, 0.6);
+            color: white;
+        }
+
+        .satellite.has-link:hover {
+            background: rgba(251, 0, 255, 0.5);
+            box-shadow: 0 0 15px rgba(251, 0, 255, 0.8);
+        }
+
+        /* 위성 위치 */
+        .satellite:nth-child(2) { top: -20px; left: 50%; transform: translateX(-50%); }
+        .satellite:nth-child(3) { top: 50%; right: -20px; transform: translateY(-50%); }
+        .satellite:nth-child(4) { bottom: -20px; left: 50%; transform: translateX(-50%); }
+        .satellite:nth-child(5) { top: 50%; left: -20px; transform: translateY(-50%); }
+
+        /* 학생 시스템 배치 */
+        .student-system:nth-child(1) { top: 10%; left: 15%; }
+        .student-system:nth-child(2) { top: 10%; right: 15%; }
+        .student-system:nth-child(3) { top: 50%; left: 5%; }
+        .student-system:nth-child(4) { top: 50%; right: 5%; }
+        .student-system:nth-child(5) { bottom: 10%; left: 20%; }
+        .student-system:nth-child(6) { bottom: 10%; right: 20%; }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 별 배경 */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* 모달 스타일 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(251, 0, 255, 0.3);
+        }
+
+        .modal h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid rgba(251, 0, 255, 0.3);
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .modal button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 10px 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .modal button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal .close-btn {
+            background: #666;
+        }
+
+        .title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            z-index: 100;
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            font-size: 14px;
+            z-index: 100;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .student-system {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .student-planet {
+                width: 60px;
+                height: 60px;
+                font-size: 12px;
+            }
+            
+            .satellite {
+                width: 30px;
+                height: 30px;
+                font-size: 10px;
+            }
+            
+            .title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="universe">
+        <div class="title">우리들의 웹사이트 탐험</div>
+        
+        <!-- 학생 시스템들 -->
+        <div class="student-system">
+            <div class="student-planet" data-student="봄">봄</div>
+            <div class="orbit">
+                <div class="satellite" data-slot="1">+</div>
+                <div class="satellite" data-slot="2">+</div>
+                <div class="satellite" data-slot="3">+</div>
+                <div class="satellite" data-slot="4">+</div>
+            </div>
+        </div>
+
+        <div class="student-system">
+            <div class="student-planet" data-student="예슬">예슬</div>
+            <div class="orbit">
+                <div class="satellite" data-slot="1">+</div>
+                <div class="satellite" data-slot="2">+</div>
+                <div class="satellite" data-slot="3">+</div>
+                <div class="satellite" data-slot="4">+</div>
+            </div>
+        </div>
+
+        <div class="student-system">
+            <div class="student-planet" data-student="예원">예원</div>
+            <div class="orbit">
+                <div class="satellite" data-slot="1">+</div>
+                <div class="satellite" data-slot="2">+</div>
+                <div class="satellite" data-slot="3">+</div>
+                <div class="satellite" data-slot="4">+</div>
+            </div>
+        </div>
+
+        <div class="student-system">
+            <div class="student-planet" data-student="용파">용파</div>
+            <div class="orbit">
+                <div class="satellite" data-slot="1">+</div>
+                <div class="satellite" data-slot="2">+</div>
+                <div class="satellite" data-slot="3">+</div>
+                <div class="satellite" data-slot="4">+</div>
+            </div>
+        </div>
+
+        <div class="student-system">
+            <div class="student-planet" data-student="지혜">지혜</div>
+            <div class="orbit">
+                <div class="satellite" data-slot="1">+</div>
+                <div class="satellite" data-slot="2">+</div>
+                <div class="satellite" data-slot="3">+</div>
+                <div class="satellite" data-slot="4">+</div>
+            </div>
+        </div>
+
+        <div class="student-system">
+            <div class="student-planet" data-student="성훈">성훈</div>
+            <div class="orbit">
+                <div class="satellite" data-slot="1">+</div>
+                <div class="satellite" data-slot="2">+</div>
+                <div class="satellite" data-slot="3">+</div>
+                <div class="satellite" data-slot="4">+</div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            각 학생의 행성을 클릭하여 소개를 보거나, 위성(+)을 클릭하여 웹사이트 링크를 추가하세요!
+        </div>
+    </div>
+
+    <!-- 모달 -->
+    <div class="modal" id="linkModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">링크 추가</h3>
+            <input type="text" id="linkName" placeholder="웹사이트 이름을 입력하세요">
+            <input type="url" id="linkUrl" placeholder="https://example.com">
+            <div>
+                <button onclick="saveLink()">저장</button>
+                <button class="close-btn" onclick="closeModal()">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 별 생성
+        function createStars() {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(star);
+            }
+        }
+
+        let currentStudent = '';
+        let currentSlot = '';
+
+        // 이벤트 리스너 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            
+            // 학생 행성 클릭 이벤트
+            document.querySelectorAll('.student-planet').forEach(planet => {
+                planet.addEventListener('click', function() {
+                    const student = this.dataset.student;
+                    alert(`${student}의 행성에 오신 것을 환영합니다! 🌟`);
+                });
+            });
+
+            // 위성 클릭 이벤트
+            document.querySelectorAll('.satellite').forEach(satellite => {
+                satellite.addEventListener('click', function() {
+                    const system = this.closest('.student-system');
+                    const studentName = system.querySelector('.student-planet').dataset.student;
+                    const slotNumber = this.dataset.slot;
+                    
+                    currentStudent = studentName;
+                    currentSlot = slotNumber;
+                    
+                    document.getElementById('modalTitle').textContent = `${studentName}의 웹사이트 링크 추가`;
+                    document.getElementById('linkModal').style.display = 'flex';
+                    
+                    // 기존 링크가 있다면 불러오기
+                    const existingLink = this.dataset.link;
+                    const existingName = this.dataset.name;
+                    
+                    if (existingLink) {
+                        document.getElementById('linkName').value = existingName || '';
+                        document.getElementById('linkUrl').value = existingLink;
+                    } else {
+                        document.getElementById('linkName').value = '';
+                        document.getElementById('linkUrl').value = '';
+                    }
+                });
+            });
+        });
+
+        function saveLink() {
+            const name = document.getElementById('linkName').value.trim();
+            const url = document.getElementById('linkUrl').value.trim();
+            
+            if (!name || !url) {
+                alert('웹사이트 이름과 URL을 모두 입력해주세요!');
+                return;
+            }
+            
+            if (!isValidUrl(url)) {
+                alert('올바른 URL을 입력해주세요! (예: https://example.com)');
+                return;
+            }
+            
+            // 해당 위성에 링크 저장
+            const system = document.querySelector(`[data-student="${currentStudent}"]`).closest('.student-system');
+            const satellite = system.querySelector(`[data-slot="${currentSlot}"]`);
+            
+            satellite.dataset.link = url;
+            satellite.dataset.name = name;
+            satellite.innerHTML = name.substring(0, 3) + (name.length > 3 ? '...' : '');
+            satellite.classList.add('has-link');
+            
+            // 클릭 시 링크 열기
+            satellite.onclick = function(e) {
+                e.stopPropagation();
+                if (confirm(`${name}을(를) 새 탭에서 열까요?`)) {
+                    window.open(url, '_blank');
+                }
+            };
+            
+            closeModal();
+        }
+
+        function closeModal() {
+            document.getElementById('linkModal').style.display = 'none';
+            currentStudent = '';
+            currentSlot = '';
+        }
+
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        // 모달 외부 클릭 시 닫기
+        document.getElementById('linkModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

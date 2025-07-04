@@ -214,8 +214,8 @@ body {
 }
 
 .slide-content iframe {
-  width: 700px;
-  height: 550px; /* 고정 높이 설정 */
+  width: 1300px;
+  height: 850px;
 }
 
 .iframe-container {
